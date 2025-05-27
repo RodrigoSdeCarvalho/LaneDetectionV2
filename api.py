@@ -1,15 +1,4 @@
-def set_working_directory():
-    import os
-    import sys
-    import re
-
-    script_dir = os.path.abspath(__file__)
-    script_dir = re.sub(pattern="lane_detection.*", repl="lane_detection/", string=script_dir)
-    script_dir = os.path.abspath(script_dir)
-    os.chdir(script_dir)
-    sys.path.append(os.path.join(script_dir))
-
-
+from app.essentials.add_module import set_working_directory
 set_working_directory()
 
 from lane_detector.lane_detector import LaneDetector
@@ -33,7 +22,7 @@ class API:
     Loader = Loader
 
     def __init__(self, camera: Camera):
-        model_path = Path().get_model('enet-10-epochs')
+        model_path = Path().get_model('ckpt_2025-05-22_22-38-37_epoch-10.pth')
         self._detector = LaneDetector(model_path)
         self._calibrator = Calibrator(camera)
 

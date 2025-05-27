@@ -21,7 +21,7 @@ def init_weights(model):
             model.bias.data.fill_(0.01)
 
 
-def train_enet(from_checkpoint: bool = False, model_name: str = 'enet-10-epochs'):
+def train_enet(from_checkpoint: bool = False, model_name: str = 'enet-10-epochs.pth'):
     # Initialize logger
     logger = Logger()
     

@@ -72,7 +72,7 @@ def main():
     test_loader = DataLoader(test_set, batch_size=1, shuffle=False, num_workers=4)
     Logger.info(f'Data loaded from {data_dir}')
 
-    model_path = Path().get_model('enet-10-epochs')
+    model_path = Path().get_model('ckpt_2025-05-22_22-38-37_epoch-10.pth')
     detector = LaneDetector(model_path)
 
     for batch in test_loader:

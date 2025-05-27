@@ -5,5 +5,5 @@ from neural_networks.trainer import train_enet
 
 
 if __name__ == '__main__':
-    model_name = 'enet-10-epochs'
+    model_name = 'enet-10-epochs.pth'
     train_enet(model_name=model_name, from_checkpoint=True)

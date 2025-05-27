@@ -57,7 +57,7 @@ class Path(Singleton):
         return syspath.join(self.outputs, output_name)
 
     def get_model(self, model_name):
-        model_name = model_name + ".pt"
+        model_name = model_name
         return syspath.join(self.models, model_name)
 
     def get_summary(self, summary_name):
