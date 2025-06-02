@@ -1,6 +1,7 @@
 assets/data/TUSimple
 logs
 summary/
+outputs/
 
 # Python
 __pycache__
