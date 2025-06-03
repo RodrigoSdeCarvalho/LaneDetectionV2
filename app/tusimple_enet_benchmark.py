@@ -95,7 +95,7 @@ def cluster_embed(embeddings, preds_bin, band_width):
 
 def main():
     # Test config
-    batch_size = 64
+    batch_size = 16
     num_workers = 4
     train_start_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
     model_name = 'ckpt_2025-05-22_22-38-37_epoch-10.pth'
@@ -149,6 +149,7 @@ def main():
         time_fit_avg = 0
         time_ct = 0
         output_list = list()
+        images_processed = 0  # Track number of images processed
 
         for step in range(num_test):
             time_run = time.time()
@@ -201,11 +202,10 @@ def main():
                 if step % 50 == 0:
                     time_ct = 0
 
-                print('{}  {}  Step:{}  Time:{:5.1f}  '
-                      'time_run_avg:{:5.1f}  time_fp_avg:{:5.1f}  time_clst_avg:{:5.1f}  time_fit_avg:{:5.1f}  fps_avg:{:d}'
-                      .format(train_start_time, tag, step, time_run*1000,
-                             time_run_avg*1000, time_fp_avg * 1000, time_clst_avg * 1000, time_fit_avg * 1000,
-                             int(1/(time_run_avg + 1e-9))))
+                # Print progress percentage
+                images_processed += 1
+                percent_done = (images_processed / num_test) * 100
+                print(f"Processed {images_processed}/{num_test} images ({percent_done:.2f}%)")
 
         # Save results
         output_file = path.get_output(f'test_pred-{train_start_time}-{model_name}-{tag}.json')
