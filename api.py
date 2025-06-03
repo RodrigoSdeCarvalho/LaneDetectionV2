@@ -2,8 +2,6 @@ from app.essentials.add_module import set_working_directory
 set_working_directory()
 
 from lane_detector.lane_detector import LaneDetector
-from neural_networks.enet import ENet
-from utils.logger import Logger
 import numpy as np
 from typing import Optional
 import torch
