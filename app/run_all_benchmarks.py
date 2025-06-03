@@ -12,16 +12,14 @@ def run_benchmark(model_path, output_dir):
     # Import here to avoid circular imports
     from tusimple_enet_benchmark import main as run_benchmark
     
-    # Set the model name in the benchmark script
-    import tusimple_enet_benchmark
-    tusimple_enet_benchmark.model_name = os.path.basename(model_path)
-    tusimple_enet_benchmark.output_dir = output_dir
+    # Get model name
+    model_name = os.path.basename(model_path)
     
-    # Run the benchmark
-    run_benchmark()
+    # Run the benchmark with string path and model name
+    run_benchmark(str(output_dir), model_name)
     
-    # Get the most recent output file
-    json_files = list(output_dir.glob(f"test_pred-*-{os.path.basename(model_path)}-*.json"))
+    # Get the most recent output file from the output directory
+    json_files = list(output_dir.glob(f"test_pred-*-{model_name}-*.json"))
     if not json_files:
         raise Exception(f"No output file found for model {model_path}")
     

@@ -93,13 +93,15 @@ def cluster_embed(embeddings, preds_bin, band_width):
     return preds_inst
 
 
-def main():
+def main(output_dir=None, model_name=None):
     # Test config
-    batch_size = 16
+    batch_size = 1
     num_workers = 4
     train_start_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
-    model_name = 'ckpt_2025-05-22_22-38-37_epoch-10.pth'
     tag = 'enet_benchmark'
+
+    if model_name is None:
+        raise ValueError("model_name must be provided")
 
     # Setup device
     if torch.cuda.is_available():
@@ -115,6 +117,7 @@ def main():
     path = Path()
     test_data_dir = path.test_data
     model_path = path.get_model(model_name)
+    model_folder = os.path.basename(os.path.dirname(model_path))  # Get the folder name containing the model
 
     # Load dataset
     test_set = TuSimpleDataset(test_data_dir, phase='test')
@@ -208,8 +211,15 @@ def main():
                 print(f"Processed {images_processed}/{num_test} images ({percent_done:.2f}%)")
 
         # Save results
-        output_file = path.get_output(f'test_pred-{train_start_time}-{model_name}-{tag}.json')
-        os.makedirs(os.path.dirname(output_file), exist_ok=True)
+        if output_dir is None:
+            # Only use model directory if running standalone
+            output_dir = os.path.join(path.models, model_folder)
+        else:
+            # When running from run_all_benchmarks.py, use the provided output_dir
+            output_dir = str(output_dir)  # Ensure it's a string
+            
+        os.makedirs(output_dir, exist_ok=True)
+        output_file = os.path.join(output_dir, f'test_pred-{train_start_time}-{model_name}-{tag}.json')
         with open(output_file, 'w') as f:
             for item in output_list:
                 json.dump(item, f)
