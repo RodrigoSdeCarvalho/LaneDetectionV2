@@ -4,7 +4,7 @@ from pathlib import Path
 from datetime import datetime
 import shutil
 
-def run_benchmark(model_path):
+def run_benchmark(model_path, output_dir):
     """Run the benchmark script for a given model."""
     print(f"\nRunning benchmark for model: {model_path}")
     
@@ -14,12 +14,12 @@ def run_benchmark(model_path):
     # Set the model name in the benchmark script
     import tusimple_enet_benchmark
     tusimple_enet_benchmark.model_name = os.path.basename(model_path)
+    tusimple_enet_benchmark.output_dir = output_dir
     
     # Run the benchmark
     run_benchmark()
     
     # Get the most recent output file
-    output_dir = Path("outputs")
     json_files = list(output_dir.glob(f"test_pred-*-{os.path.basename(model_path)}-*.json"))
     if not json_files:
         raise Exception(f"No output file found for model {model_path}")
@@ -67,7 +67,7 @@ def main():
             model_output_dir.mkdir(exist_ok=True)
             
             # Run benchmark
-            pred_file = run_benchmark(model_file)
+            pred_file = run_benchmark(model_file, model_output_dir)
             
             # Run metrics
             metrics = run_metrics(pred_file, gt_file)

@@ -95,7 +95,7 @@ def cluster_embed(embeddings, preds_bin, band_width):
 
 def main():
     # Test config
-    batch_size = 1
+    batch_size = 64
     num_workers = 4
     train_start_time = time.strftime('%Y-%m-%d_%H-%M-%S', time.localtime(time.time()))
     model_name = 'ckpt_2025-05-22_22-38-37_epoch-10.pth'
