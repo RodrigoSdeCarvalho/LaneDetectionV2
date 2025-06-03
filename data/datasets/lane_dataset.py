@@ -10,7 +10,7 @@ VGG_MEAN = [103.939, 116.779, 123.68]
 
 
 class TuSimpleDataset(Dataset):
-    def __init__(self, dataset_dir, phase, size=(512,256), transform=None):
+    def __init__(self, dataset_dir, phase, size=(512,288), transform=None):
         self.dataset_dir = dataset_dir
         self.phase = phase
         self.size = size
