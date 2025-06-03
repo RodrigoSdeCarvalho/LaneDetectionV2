@@ -1,5 +1,6 @@
 import os
 import json
+import traceback
 from pathlib import Path
 from datetime import datetime
 import shutil
@@ -25,7 +26,11 @@ def run_benchmark(model_path, output_dir):
         raise Exception(f"No output file found for model {model_path}")
     
     # Get the most recent file
-    latest_json = max(json_files, key=os.path.getctime)
+    try:
+        latest_json = max(json_files, key=os.path.getctime)
+    except ValueError:
+        raise Exception(f"Could not find any JSON files for model {model_path}")
+    
     return latest_json
 
 def run_metrics(pred_file, gt_file):
@@ -87,9 +92,14 @@ def main():
             shutil.copy2(pred_file, model_output_dir / "predictions.json")
             
         except Exception as e:
-            print(f"Error processing model {model_file}: {str(e)}")
+            print(f"Error processing model {model_file}:")
+            print("Exception:", str(e))
+            print("\nFull stack trace:")
+            traceback.print_exc()
+            print("\n")
             all_results[model_name] = {
                 "error": str(e),
+                "stack_trace": traceback.format_exc(),
                 "model_file": str(model_file)
             }
     
