@@ -12,26 +12,52 @@ This project implements lane detection using neural networks and computer vision
 
 1. Clone the repository:
 
-```bash
-git clone [repository-url]
-cd LaneDetectionV2
-```
+    ```bash
+    git clone [repository-url]
+    cd LaneDetectionV2
+    ```
 
 2. Create and activate a virtual environment (recommended):
 
-```bash
-python -m venv venv
-# On Windows
-.\venv\Scripts\activate
-# On Linux/Mac
-source venv/bin/activate
-```
+    ```bash
+    python -m venv venv
+    # On Windows
+    .\venv\Scripts\activate
+    # On Linux/Mac
+    source venv/bin/activate
+    ```
 
 3. Install dependencies:
 
-```bash
-pip install -r requirements.txt
-```
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+## Dataset Setup
+
+### TuSimple Dataset
+
+This project uses the TuSimple lane detection dataset for training and testing. Follow these steps to set up the dataset:
+
+1. Download the TuSimple dataset from the official repository:
+   - Visit: <https://github.com/TuSimple/tusimple-benchmark>
+   - Follow the instructions to download the dataset
+
+2. Place the dataset in the following directory structure:
+
+    ```bash
+    assets/data/TUSimple/
+        ├── train_set/
+        └── test_set/
+    ```
+
+The dataset is required for:
+
+- Training the ENet model
+- Running lane detection tests
+- Evaluating model performance
+- Testing Bird's Eye View transformations
+- Running benchmarks
 
 ## Project Structure
 
