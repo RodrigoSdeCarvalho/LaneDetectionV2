@@ -20,7 +20,7 @@ class API:
     Loader = Loader
 
     def __init__(self, camera: Camera):
-        model_path = Path().get_model('ckpt_2025-05-22_22-38-37_epoch-10.pth')
+        model_path = Path().get_model('enet-10-epochs.pt')
         self._detector = LaneDetector(model_path)
         self._calibrator = Calibrator(camera)
 
