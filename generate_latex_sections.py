@@ -30,7 +30,7 @@ def generate_latex_sections():
                     # Escape \, {, }, and _ for \texttt{}
                     section_name = escape_latex_texttt(rel_path)
                     
-                    outfile.write(f'\\section{{\\texttt{{{section_name}}}}}\n')
+                    outfile.write(f'{{\\texttt{{{section_name}}}}}\n')
                     outfile.write('\\begin{minted}[\n')
                     outfile.write('    frame=lines,\n')
                     outfile.write('    framesep=2mm,\n')
