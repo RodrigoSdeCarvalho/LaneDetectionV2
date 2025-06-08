@@ -25,7 +25,7 @@
       "width": 1280,
       "height": 720,
       "preprocess_width": 512,
-      "preprocess_height": 288,
+      "preprocess_height": 256,
       "channel": 3,
       "bev": {
         "max_y": 240,
