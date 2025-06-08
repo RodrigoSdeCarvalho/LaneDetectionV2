@@ -10,6 +10,10 @@ class Calibrator:
         self.width = width
         self.height = height
         self.camera = camera
+        
+        # precompute inverse matrices
+        self._inv_I = np.linalg.inv(self.camera.intrinsics)
+        self._inv_E = np.linalg.inv(self.camera.extrinsics)
 
     def to_real_world(self, pixel: np.ndarray) -> np.ndarray:
         """
@@ -25,18 +29,13 @@ class Calibrator:
         # T -> 3x1 vector
         # RWC -> 4x1 real world coordinates
         S = self.camera.scale_factor
-        I = self.camera.intrinsics
-        E = self.camera.extrinsics
         P = np.array([pixel[1], pixel[0], 1]) # in this context, [1] is x-axis and [0] is y-axis
         T = self.camera.t
 
-        inv_I = np.linalg.inv(I)
-        inv_E = np.linalg.inv(E)
-
         SP = S * P
-        SP_inv_I = SP @ inv_I
+        SP_inv_I = SP @ self._inv_I
         SP_inv_I_T = SP_inv_I - T
-        RWC = SP_inv_I_T @ inv_E
+        RWC = SP_inv_I_T @ self._inv_E
 
         return RWC
 
